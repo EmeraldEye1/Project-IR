@@ -4,10 +4,10 @@ from src.LTR import predict, make_user_feature
 import pandas as pd
 from scipy import sparse
 
-anime = pickle.load(open('C:/Users/asus/Project-IR/resources/anime_data.pkl', 'rb', ))
-title = pickle.load(open('C:/Users/asus/Project-IR/resources/ani_title.pkl', 'rb'))
-synopsis = pickle.load(open('C:/Users/asus/Project-IR/resources/ani_synopsis.pkl', 'rb'))
-rating = pickle.load(open('C:/Users/asus/Project-IR/resources/rating_1000p.pkl', 'rb'))
+anime = pickle.load(open('C:/Users/Super_Computer/Project-IR/resources/anime_data.pkl', 'rb', ))
+title = pickle.load(open('C:/Users/Super_Computer/Project-IR/resources/ani_title.pkl', 'rb'))
+synopsis = pickle.load(open('C:/Users/Super_Computer/Project-IR/resources/ani_synopsis.pkl', 'rb'))
+rating = pickle.load(open('C:/Users/Super_Computer/Project-IR/resources/rating_1000p.pkl', 'rb'))
 
 
 def query_scoring(query):

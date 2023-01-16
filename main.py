@@ -1,5 +1,5 @@
 import string
-# from spellchecker import SpellChecker
+from spellchecker import SpellChecker
 from flask import Flask, request, make_response, jsonify
 from sqlalchemy_utils.functions import database_exists, create_database
 from controller.animeseaching import query_scoring, get_ani_list, list_bookmark
@@ -23,14 +23,14 @@ with app.app_context():
 bookmark_schema = BookmarkSchema()
 bookmarks_schema = BookmarkSchema(many=True)
 
-# spell = SpellChecker()
-# spell.word_frequency.load_text('D:/3rd-2nd/IR-project/myProject-IR-backend/resources/spelling_check.pkl')
+spell = SpellChecker()
+spell.word_frequency.load_text('C:/Users/Super_Computer/Project-IR/resources/spelling_check1.pkl')
 
 
-# def check_spell(query):
-#     spell_correctness = [spell.correction(w) for w in query.split()]
-#     cor_word = spell_correctness[0]
-#     return cor_word, query
+def check_spell(query):
+    spell_correctness = [spell.correction(w) for w in query.split()]
+    cor_word = spell_correctness[0]
+    return cor_word, query
 
 
 @app.route('/login', methods=['POST'])
@@ -38,17 +38,17 @@ def user_login():
     return UserController.login()
 
 
-# @app.route('/search', methods=['POST'])
-# def add_favorite():
-#     query = request.get_json()['search']
-#     query = query.lower().translate(str.maketrans('', '', string.punctuation))
-#     corr_word, query = check_spell(query)
-#     if (corr_word != query):
-#         print(query)
-#         print("Did you mean: " + corr_word + " ?")
-#     res = query_scoring(corr_word)
-#     res = {'result': res, 'correction': corr_word, 'query': query}
-#     return make_response(jsonify(res), 200)
+@app.route('/search', methods=['POST'])
+def add_favorite():
+    query = request.get_json()['title']
+    query = query.lower().translate(str.maketrans('', '', string.punctuation))
+    corr_word, query = check_spell(query)
+    if (corr_word != query):
+        print(query)
+        print("Did you mean: " + corr_word + " ?")
+    res = query_scoring(corr_word)
+    res = {'result': res, 'correction': corr_word, 'query': query}
+    return make_response(jsonify(res), 200)
 
 
 @app.route('/')

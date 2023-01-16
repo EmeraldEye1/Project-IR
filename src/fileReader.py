@@ -46,9 +46,9 @@ def create_text_spelling_check():
 
 
 def clean_json_data():
-    json_f = pd.read_json('D:/3rd-2nd/IR-project/emb_files/anime.json')
+    json_f = pd.read_json('C:/Users/Super_Computer/Project-IR/anime/anime.json')
     score_df = pd.read_csv('C:/Users/asus\Project-IR/resources/anime.csv')
-    rating = pd.read_csv('D:/3rd-2nd/IR-953481/py-code/module0/resource/anime_rating_1000_users.csv')
+    rating = pd.read_csv('C:/Users/Super_Computer/Project-IR/resources/anime_rating_1000_users.csv')
 
     first_hd = json_f['images'].apply(lambda x: x['jpg'])
     # print(first_hd)
@@ -75,10 +75,10 @@ def clean_json_data():
 
 
     clean_df = json_f.dropna()
-    pickle.dump(rating, open('D:/3rd-2nd/IR-project/myProject-IR-backend/resources/rating_1000p.pkl', 'wb'))
-    pickle.dump(clean_df, open('D:/3rd-2nd/IR-project/myProject-IR-backend/resources/anime_data.pkl', 'wb'))
-    pickle.dump(clean_df['title'], open('D:/3rd-2nd/IR-project/myProject-IR-backend/resources/spell_corr_title.pkl', 'wb'))
-    pickle.dump(clean_df['synopsis'], open('D:/3rd-2nd/IR-project/myProject-IR-backend/resources/spell_corr_synopsis.pkl', 'wb'))
+    pickle.dump(rating, open('C:Users/Super_Computer/Project-IR/resources/rating_1000p.pkl', 'wb'))
+    pickle.dump(clean_df, open('C:/Users/Super_Computer/Project-IR/resources/anime_data.pkl', 'wb'))
+    pickle.dump(clean_df['title'], open('C:/Users/Super_Computer/Project-IR/resources/ani_title.pkl', 'wb'))
+    pickle.dump(clean_df['synopsis'], open('C:/Users/Super_Computer/Project-IR/resources/spell_corr_synopsis.pkl', 'wb'))
 def title_synopsis_pkl():
     data = pickle.load(open('../resources/anime_data.pkl', 'rb'))
     title = data['title']
