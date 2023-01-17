@@ -8,7 +8,7 @@ import datetime
 db = SQLAlchemy()
 
 
-class UserController:
+class userControll:
     @staticmethod
     def login():
         try:

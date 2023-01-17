@@ -1,12 +1,14 @@
 import string
+import pandas as pd
 from spellchecker import SpellChecker
 from flask import Flask, request, make_response, jsonify
 from sqlalchemy_utils.functions import database_exists, create_database
-from controller.animeseaching import query_scoring, get_ani_list, list_bookmark
+from controller.animeseaching import query_scoring, get_ani_list, anime, title, synopsis
 from controller.userController import UserController
 from models.bookmark import BookmarkSchema, Bookmark
 from models.database import db
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+from src.LTR import make_user_feature, predict
 
 app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
@@ -59,6 +61,7 @@ def get_all_anime():
 
 
 @app.route('/addBookmark', methods=['POST'])
+@cross_origin()
 def add_bookmark():
     uid = request.get_json()['uid']
     ani_id = request.get_json()['mal_id']
@@ -87,12 +90,14 @@ def remove_bookmark():
 @app.route('/Bookmark', methods=['GET'])
 def get_bookmark():
     uid = request.get_json()['uid']
+    res =[]
     all_book = db.session.query(Bookmark).filter_by(uid=uid).all()
-    user = Bookmark.serialize_list(all_book)
-    result = list_bookmark(user)
-    # all_bookmarks = Bookmark.query.all()
-    # results = bookmarks_schema.dump(all_bookmarks)
-    return jsonify({'result': result}), 200
+    all_book = Bookmark.serialize_list(all_book)
+    for i in all_book:
+        temp = anime[anime['mal_id'] == i['ani_id']].to_dict('records')[0]
+        res.append(temp)
+    res.sort(key=lambda i: i['score'], reverse=True)
+    return jsonify({'result': res}), 200
 
 
 @app.route('/animeDetails/<id>?', methods=['GET'])
