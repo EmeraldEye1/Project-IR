@@ -2,13 +2,13 @@ from flask_sqlalchemy import SQLAlchemy
 import jwt
 from flask import request, jsonify
 import bcrypt
-from models.user import User
+from model.user import User
 import datetime
 
 db = SQLAlchemy()
 
 
-class userControll:
+class UserController:
     @staticmethod
     def login():
         try:

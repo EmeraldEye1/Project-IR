@@ -37,23 +37,23 @@ def genre_to_category(df):
     df = pd.concat([df, genre_df], axis=1)
     return df
 
-
-def make_anime_feature(df):
-    # convert object to a numeric type, replacing Unknown with nan.
-    df['Score'] = df['Score'].apply(lambda x: np.nan if x == 'Unknown' else float(x))
-    for i in range(1, 11):
-        df[f'Score-{i}'] = df[f'Score-{i}'].apply(lambda x: np.nan if x == 'Unknown' else float(x))
-
-    # add genre ctegory columns
-    df = genre_to_category(df)
-
-    return df
+#
+# def make_anime_feature(df):
+#     # convert object to a numeric type, replacing Unknown with nan.
+#     df['Score'] = df['Score'].apply(lambda x: np.nan if x == 'Unknown' else float(x))
+#     for i in range(1, 11):
+#         df[f'Score-{i}'] = df[f'Score-{i}'].apply(lambda x: np.nan if x == 'Unknown' else float(x))
+#
+#     # add genre ctegory columns
+#     df = genre_to_category(df)
+#
+#     return df
 
 
 def make_user_feature(df):
     # add user feature
-    df['rating_count'] = df.groupby('user_id')['anime_id'].transform('count')
-    df['rating_mean'] = df.groupby('user_id')['rating'].transform('mean')
+    df['score_count'] = df.groupby('uid')['ani_id'].transform('count')
+    df['score_mean'] = df.groupby('uid')['score'].transform('mean')
     return df
 
 
